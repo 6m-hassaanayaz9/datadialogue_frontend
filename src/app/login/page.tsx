@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import React from "react";
-import {useRouter} from "next/navigation";
+import { useRouter} from "next/navigation";
 import {axios} from "axios";
 import { useState } from "react";
 // import {useForm} from "react-hook-form";
@@ -21,7 +21,60 @@ export default function LoginPage(){
     //     setPassword(e.target.value);
     // };
 
-    const handleSubmit = (e) => {
+    // const handleSubmit = (e) => {
+    //     e.preventDefault();
+    //     // Validate email format
+    //     if (!validateEmail(email)) {
+    //         setEmailError("Valid email is required");
+    //         return;
+    //     }
+        
+    //     setEmailError("");
+
+    //     // Log the email and password
+    //     console.log("Email:", email);
+    //     console.log("Password:", password);
+    // };
+    // const handleSubmit = async (e) => {
+    //     e.preventDefault();
+    //     // Validate email format
+    //     if (!validateEmail(email)) {
+    //         setEmailError("Valid email is required");
+    //         return;
+    //     }
+        
+    //     setEmailError("");
+        
+        
+
+    //     try {
+            
+    //         const response = await fetch("http://127.0.0.1:8000/login/", {
+    //             method: 'POST',
+    //             headers: {
+    //                 'Content-Type': 'application/json',
+    //             },
+    //             body: JSON.stringify({ email, password }),
+    //         });
+    //         const responseData = await response.json(); // Parse JSON response
+    //         if (response.ok) {
+    //             // Handle successful login, e.g., redirect to dashboard
+    //             console.log('Login successful');
+    //             return responseData;
+    //         } else {
+    //             // Handle login failure, e.g., display error message
+    //             console.error('Login failed');
+    //         }
+    //     } catch (error) {
+    //         console.error('Error occurred while logging in:', error);
+    //     }
+        
+    //     // Log the email and password
+    //     console.log("Email:", email);
+    //     console.log("Password:", password);
+    // };
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
         // Validate email format
         if (!validateEmail(email)) {
@@ -30,11 +83,40 @@ export default function LoginPage(){
         }
         
         setEmailError("");
-
+         
+        
+        try {
+            const formData = new URLSearchParams();
+            formData.append('email', email);
+            formData.append('password', password);
+            
+            const response = await fetch("http://127.0.0.1:8000/login/", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: formData,
+            });
+            const responseData = await response.json(); // Parse JSON response
+            console.log(responseData);
+            if (response.ok) {
+                // Handle successful login, e.g., redirect to dashboard
+                console.log('Login successful');
+                return responseData;
+                router.push("userDashboard"); 
+            } else {
+                // Handle login failure, e.g., display error message
+                console.error('Login failed');
+            }
+        } catch (error) {
+            console.error('Error occurred while logging in:', error);
+        }
+        
         // Log the email and password
         console.log("Email:", email);
         console.log("Password:", password);
     };
+    
 
     const validateEmail = (email: string) => {
         
@@ -72,6 +154,8 @@ export default function LoginPage(){
                             <input className="w-full rounded-sm h-8 border border-gray-400 text-black"
                                 id="password" 
                                 type="password" 
+                                value={password} // Bind the value of the input field to the password state variable
+                                onChange={(e) => setPassword(e.target.value)}
                                 />
                         </div>
                         {/* <div>
