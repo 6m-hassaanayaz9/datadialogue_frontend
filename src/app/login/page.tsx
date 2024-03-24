@@ -17,62 +17,6 @@ export default function LoginPage(){
         setEmail(e.target.value);
     };
 
-    // const handlePasswordChange = (e) => {
-    //     setPassword(e.target.value);
-    // };
-
-    // const handleSubmit = (e) => {
-    //     e.preventDefault();
-    //     // Validate email format
-    //     if (!validateEmail(email)) {
-    //         setEmailError("Valid email is required");
-    //         return;
-    //     }
-        
-    //     setEmailError("");
-
-    //     // Log the email and password
-    //     console.log("Email:", email);
-    //     console.log("Password:", password);
-    // };
-    // const handleSubmit = async (e) => {
-    //     e.preventDefault();
-    //     // Validate email format
-    //     if (!validateEmail(email)) {
-    //         setEmailError("Valid email is required");
-    //         return;
-    //     }
-        
-    //     setEmailError("");
-        
-        
-
-    //     try {
-            
-    //         const response = await fetch("http://127.0.0.1:8000/login/", {
-    //             method: 'POST',
-    //             headers: {
-    //                 'Content-Type': 'application/json',
-    //             },
-    //             body: JSON.stringify({ email, password }),
-    //         });
-    //         const responseData = await response.json(); // Parse JSON response
-    //         if (response.ok) {
-    //             // Handle successful login, e.g., redirect to dashboard
-    //             console.log('Login successful');
-    //             return responseData;
-    //         } else {
-    //             // Handle login failure, e.g., display error message
-    //             console.error('Login failed');
-    //         }
-    //     } catch (error) {
-    //         console.error('Error occurred while logging in:', error);
-    //     }
-        
-    //     // Log the email and password
-    //     console.log("Email:", email);
-    //     console.log("Password:", password);
-    // };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -102,8 +46,9 @@ export default function LoginPage(){
             if (response.ok) {
                 // Handle successful login, e.g., redirect to dashboard
                 console.log('Login successful');
-                return responseData;
                 router.push("userDashboard"); 
+                return responseData;
+                
             } else {
                 // Handle login failure, e.g., display error message
                 console.error('Login failed');
